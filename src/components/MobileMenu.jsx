@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function MobileMenu({ navigation }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +37,10 @@ export default function MobileMenu({ navigation }) {
                   {item.name}
                 </Link>
               ))}
+              <div className="px-4 py-2 flex items-center justify-between">
+                <span className="text-gray-600 font-semibold">Theme</span>
+                <ThemeToggle />
+              </div>
               <Link
                 href="/contact"
                 className="text-center px-4 py-4 mt-2 rounded-xl bg-orange-600 text-white font-bold"

@@ -31,7 +31,7 @@ export default function HomeSectionsClient({ featuredProducts }) {
           <Feature icon={Package} title="Premium Quality" />
           <Feature icon={Shield} title="Certified Export" />
           <Feature icon={Truck} title="Global Shipping" />
-          <Feature icon={Award} title="15+ Years Experience" />
+          <Feature icon={Award} title="5+ Years Experience" />
         </motion.div>
       </section>
 

@@ -8,10 +8,24 @@ export default function FilteredProductList({ products, categories = [] }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const allCategories = ["All", ...categories];
 
+  const getProductsByCategory = () => {
+    const grouped = {};
+    products.forEach((product) => {
+      if (!grouped[product.category]) {
+        grouped[product.category] = [];
+      }
+      grouped[product.category].push(product);
+    });
+    return grouped;
+  };
+
   const filteredProducts =
     selectedCategory === "All"
       ? products
       : products.filter((product) => product.category === selectedCategory);
+
+  const isShowingAllCategories = selectedCategory === "All";
+  const productsByCategory = isShowingAllCategories ? getProductsByCategory() : {};
 
   return (
     <>
@@ -41,20 +55,39 @@ export default function FilteredProductList({ products, categories = [] }) {
         </div>
       </div>
 
-      {/* Products Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.id} {...product} />
-        ))}
-      </div>
+      {/* Section-wise Products or Single Category Products */}
+      {isShowingAllCategories ? (
+        <>
+          {/* Show products grouped by category */}
+          {allCategories.slice(1).map((category) => (
+            <div key={category} className="mb-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">{category}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {productsByCategory[category]?.map((product) => (
+                  <ProductCard key={product.id} {...product} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </>
+      ) : (
+        <>
+          {/* Show flat grid for single category */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
+          </div>
 
-      {/* Empty State */}
-      {filteredProducts.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">
-            No products found in this category.
-          </p>
-        </div>
+          {/* Empty State */}
+          {filteredProducts.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">
+                No products found in this category.
+              </p>
+            </div>
+          )}
+        </>
       )}
     </>
   );

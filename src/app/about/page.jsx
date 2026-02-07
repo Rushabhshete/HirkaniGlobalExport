@@ -28,7 +28,7 @@ export default function AboutPage() {
               </h1>
               <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
                 <p>
-                  For over 15 years,{" "}
+                  For over 5 years,{" "}
                   <span className="font-semibold text-gray-900">
                     Spice Export Co.
                   </span>{" "}
@@ -65,13 +65,13 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <StatItem
               icon={Award}
-              value="15+"
+              value="5+"
               label="Years of Expertise"
               invert
             />
             <StatItem
               icon={Globe}
-              value="50+"
+              value="10+"
               label="Global Destinations"
               invert
             />
