@@ -10,16 +10,7 @@ export default function ThemeToggle({ className = "" }) {
 
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) {
-    return (
-      <span
-        aria-hidden
-        className={`inline-flex h-7 w-12 rounded-full border border-border bg-accent ${className}`}
-      />
-    );
-  }
-
-  const isDark = resolvedTheme === "dark";
+  const isDark = (resolvedTheme || "dark") === "dark";
 
   return (
     <button
@@ -34,6 +25,7 @@ export default function ThemeToggle({ className = "" }) {
         transition-colors
         focus-visible:outline-none
         focus-visible:ring-2 focus-visible:ring-ring
+        ${mounted ? "" : "opacity-80"}
         ${className}
       `}
     >

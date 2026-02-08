@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🌶️ Hirkani Global — Premium Spice Exporters
 
-## Getting Started
+A professional **spice export business website** built with **Next.js (App Router)**, focused on performance, trust, and international buyer readiness.
 
-First, run the development server:
+This project represents **Hirkani Global**, an Indian exporter of premium-quality spices.
+
+---
+
+## 🚀 Tech Stack
+
+- **Next.js** (App Router, JavaScript only)
+- **Tailwind CSS**
+- **Framer Motion** (animations)
+- **next/image & next/font** (performance optimized)
+
+---
+
+## 🎯 Project Purpose
+
+- Present Hirkani Global as a **trusted global spice exporter**
+- Clean, export-grade UI (corporate & professional)
+- Strong branding with symbol-based logo
+- Fully responsive (desktop, tablet, mobile)
+- SEO & performance optimized
+
+---
+
+## ✨ Features
+
+- 🌍 Export-focused professional design
+- 🌶️ Spice product–centric layout
+- 🌗 Light & Dark mode
+- 📱 Mobile-first responsive design
+- ⚡ Optimized images, fonts, and assets
+- 🔖 Custom favicon & brand symbol
+- 🔒 Production-ready structure
+
+---
+
+## 📁 Project Structure
+
+app/
+├── layout.js
+├── page.js
+├── globals.css
+├── icon.png
+├── apple-icon.png
+components/
+├── Header.jsx
+├── Footer.jsx
+├── Hero.jsx
+├── Products.jsx
+└── ...
+public/
+└── images/
+
+---
+
+## 🧑‍💻 Getting Started
+
+### Install dependencies
 
 ```bash
+npm install
+Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Open your browser at:
+
+http://localhost:3000
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

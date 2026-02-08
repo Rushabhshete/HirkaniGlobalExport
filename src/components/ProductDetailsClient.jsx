@@ -10,16 +10,12 @@ export default function ProductDetailsClient({ product }) {
   const [mainImage, setMainImage] = useState(product.image);
   const [quantity, setQuantity] = useState(1);
   const [packagingOption, setPackagingOption] = useState(
-    product.packaging?.[0]
+    product.packaging?.[0],
   );
 
   const { formatPrice } = useCurrency();
 
-  const gallery = [
-    product.image,
-    "https://placehold.co/800x400",
-    "https://placehold.co/800x400",
-  ];
+  const gallery = [product.image, "/placeholder.png", "/placeholder.png"];
 
   const basePrice = useMemo(() => {
     const match = product.price.match(/[\d.,]+/);
@@ -103,9 +99,7 @@ export default function ProductDetailsClient({ product }) {
           Origin: India • Export Quality
         </p>
 
-        <p className="glass-text-muted mb-6">
-          {product.description}
-        </p>
+        <p className="glass-text-muted mb-6">{product.description}</p>
 
         {/* =====================
             PACKAGING & PRICING
@@ -205,7 +199,7 @@ export default function ProductDetailsClient({ product }) {
             ===================== */}
         <Link
           href={`/contact?product=${encodeURIComponent(
-            product.name
+            product.name,
           )}&quantity=${quantity}`}
           className="
             inline-flex items-center justify-center
