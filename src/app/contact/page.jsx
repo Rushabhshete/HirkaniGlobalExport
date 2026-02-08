@@ -5,21 +5,23 @@ import { Info } from "@/helper/contact-page-helper";
 
 export default function ContactPage() {
   return (
-    <main className="py-8 bg-white min-h-screen">
+    <main className="py-12 bg-background min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        {/* Page Header */}
+        <div className="mb-10 animate-fade-up will-animate">
+          <h1 className="text-3xl font-bold text-foreground mb-4">
             Contact Us
           </h1>
-          <p className="text-lg text-gray-600">
-            Get in touch for export inquiries, bulk orders, or product details.
+          <p className="text-lg text-foreground/70 max-w-2xl">
+            Get in touch for export inquiries, bulk orders, or detailed product
+            information. Our team responds within 24 hours.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* LEFT: Contact Info (unchanged) */}
-          <div className="lg:col-span-1">
-            <div className="bg-gray-50 rounded-lg p-6 space-y-6">
+          {/* LEFT: Contact Info */}
+          <div className="lg:col-span-1 animate-fade-up will-animate delay-100">
+            <div className="glass p-6 rounded-xl space-y-6">
               <Info
                 icon={Mail}
                 title="Email"
@@ -43,15 +45,15 @@ export default function ContactPage() {
                 icon={Clock}
                 title="Business Hours"
                 lines={[
-                  "Monday - Friday: 9:00 AM - 6:00 PM IST",
-                  "Saturday: 9:00 AM - 2:00 PM IST",
+                  "Monday – Friday: 9:00 AM – 6:00 PM IST",
+                  "Saturday: 9:00 AM – 2:00 PM IST",
                 ]}
               />
             </div>
           </div>
 
-          {/* RIGHT: SAME FORM (client) */}
-          <Suspense fallback={<div>Loading form...</div>}>
+          {/* RIGHT: Contact Form */}
+          <Suspense fallback={<div className="text-foreground/60">Loading form…</div>}>
             <ContactForm />
           </Suspense>
         </div>

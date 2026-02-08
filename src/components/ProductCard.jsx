@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useCurrency } from "@/helper/CurrencyContext";
@@ -21,7 +20,6 @@ export default function ProductCard({
   const displayPrice = useMemo(() => {
     if (!price && price !== 0) return "";
 
-    // support numeric prices or strings like "$12.50/kg"
     let unit = "";
     let numericValue = 0;
 
@@ -40,53 +38,96 @@ export default function ProductCard({
   }, [price, formatPrice]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.3 }}
-      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+    <div
+      className="
+        bg-surface
+        rounded-xl
+        border border-border
+        overflow-hidden
+        shadow-sm
+        hover:shadow-lg
+        transition
+        animate-fade-up will-animate
+        hover:-translate-y-1
+      "
     >
+      {/* Image */}
+      <div className="relative h-48 w-full overflow-hidden">
+        <Image
+          src={image}
+          alt={name}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+          className="object-cover transition-transform duration-500 hover:scale-105"
+        />
+      </div>
 
-<div className="relative h-48 w-full">
-  <Image
-    src={image}
-    alt={name}
-    fill
-    sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 25vw"
-    className="object-cover transition-transform duration-500 hover:scale-110"
-  />
-</div>
-
+      {/* Content */}
       <div className="p-4">
+        {/* Meta */}
         <div className="flex justify-between items-center mb-2">
-          <span className="text-xs font-medium px-2 py-1 rounded bg-green-100 text-green-700">
+          <span
+            className="
+              text-xs font-medium
+              px-2 py-1 rounded-full
+            glass glass-thick
+              glass-text-muted
+            "
+          >
             {category}
           </span>
-          <span className="text-xs text-gray-500">Origin: {origin}</span>
+
+          <span className="text-xs glass-text-muted">
+            Origin: {origin}
+          </span>
         </div>
 
         {isComingSoon && (
-          <span className="text-xs font-semibold px-2 py-1 rounded bg-orange-100 text-orange-700">
+          <span
+            className="
+              inline-block mt-1
+              text-xs font-semibold
+              px-2 py-1 rounded-full
+             glass glass-thick
+              
+            "
+          >
             Coming Soon
           </span>
         )}
 
-        <h3 className="text-lg font-semibold text-gray-900 mt-2">{name}</h3>
-        <p className="text-sm text-gray-600 mt-2 line-clamp-2">{description}</p>
+        <h3 className="text-lg font-semibold text-foreground mt-2">
+          {name}
+        </h3>
 
+        <p className="text-sm glass-text-muted mt-2 line-clamp-2">
+          {description}
+        </p>
+
+        {/* Footer */}
         <div className="flex items-center justify-between mt-4">
-          <p className="text-orange-600 font-bold">{displayPrice}</p>
+          <p className="text-primary font-bold">
+            {displayPrice}
+          </p>
+
           {!isComingSoon && (
-              <Link
-                href={`/products/${encodeURIComponent(slug)}`}
-                className="px-4 py-2 text-sm font-medium bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors"
-              >
+            <Link
+              href={`/products/${encodeURIComponent(slug)}`}
+              className="
+                px-4 py-2
+                text-sm font-medium
+                rounded-md
+                text-white
+                bg-gradient-brand
+                hover:brightness-110
+                transition
+              "
+            >
               View Details
             </Link>
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

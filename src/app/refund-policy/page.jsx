@@ -1,53 +1,57 @@
-import React from "react";
-
 export default function RefundPolicy() {
   return (
-    <div className="min-h-screen bg-white">
-      <main className="py-12">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">
+    <main className="min-h-screen bg-background py-12">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <header className="mb-10">
+          <h1 className="text-3xl font-bold text-foreground mb-4">
             Refund & Cancellation Policy
           </h1>
-
-          <p className="text-gray-700 mb-4">
-            This policy describes conditions for cancellations, returns, and
-            refunds for export orders. It is intended as a clear, professional
-            placeholder for export-oriented commerce.
+          <p className="text-foreground/70">
+            This policy outlines the conditions for cancellations, claims, and
+            refunds related to export orders. It serves as a clear and
+            professional placeholder for export-oriented commerce.
           </p>
+        </header>
 
-          <section className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+        {/* Content */}
+        <div className="glass p-8 rounded-2xl space-y-8">
+          <section>
+            <h2 className="text-lg font-semibold text-foreground mb-2">
               Cancellations
             </h2>
-            <p className="text-gray-600">
-              Orders may be cancelled within the timeframe specified in the
-              sales confirmation. Cancellation may be subject to fees to cover
-              processing and logistics.
-            </p>
-          </section>
-
-          <section className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">
-              Claims & Returns
-            </h2>
-            <p className="text-gray-600">
-              For damaged or non-conforming goods, please notify us within the
-              specified claim period. Claims will be reviewed and resolved per
-              the terms of sale and evidence submitted.
+            <p className="text-foreground/70">
+              Orders may be cancelled only within the timeframe specified in the
+              sales confirmation. Cancellations may be subject to charges to
+              cover processing, preparation, and logistics costs already
+              incurred.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+            <h2 className="text-lg font-semibold text-foreground mb-2">
+              Claims & Returns
+            </h2>
+            <p className="text-foreground/70">
+              In the event of damaged, defective, or non-conforming goods,
+              buyers must notify us within the claim period specified in the
+              contract. All claims are reviewed based on documentation and
+              evidence provided.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-foreground mb-2">
               Refunds
             </h2>
-            <p className="text-gray-600">
+            <p className="text-foreground/70">
               Refunds, where applicable, will be processed using the original
-              payment method after verification and agreement between parties.
+              payment method after verification, agreement between parties, and
+              completion of any required formalities.
             </p>
           </section>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

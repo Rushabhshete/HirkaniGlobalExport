@@ -1,29 +1,36 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function HeroStatsTrigger() {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}
-      className="relative w-full h-100 lg:h-100"
-    >
+    <div className="relative w-full h-96 animate-slide-left will-animate">
       <Image
-        src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=80"
+        src="/about_spice_img.jpg"
         alt="Indian spices in wooden bowls"
         fill
-        className="rounded-2xl shadow-xl object-cover"
         priority
+        className="rounded-2xl shadow-xl object-cover"
       />
 
-      {/* Simplified Badge from your original design */}
-      <div className="absolute -bottom-4 -left-4 bg-white p-5 rounded-xl shadow-lg border border-orange-50">
-        <p className="text-sm font-bold text-gray-900">10+ Countries</p>
-        <p className="text-xs text-gray-500 font-medium">Worldwide Export</p>
+      {/* Stats Badge */}
+      <div
+        className="
+          absolute -bottom-4 -left-4
+          glass-thick
+          p-5 rounded-xl
+          shadow-lg
+          border border-border
+          animate-fade-up delay-200
+        "
+      >
+        <p className="text-sm font-bold glass-text">
+          10+ Countries
+        </p>
+        <p className="text-xs font-medium glass-text-muted">
+          Worldwide Export
+        </p>
       </div>
-    </motion.div>
+    </div>
   );
 }

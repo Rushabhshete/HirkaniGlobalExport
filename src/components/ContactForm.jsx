@@ -62,8 +62,12 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="lg:col-span-2">
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="lg:col-span-2 animate-fade-up will-animate">
+      <form
+        onSubmit={handleSubmit}
+        className="glass glass-thick p-8 rounded-2xl space-y-6"
+      >
+        {/* Name / Email */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
             label="Full Name *"
@@ -82,6 +86,7 @@ export default function ContactForm() {
           />
         </div>
 
+        {/* Company / Country */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
             label="Company Name"
@@ -97,6 +102,7 @@ export default function ContactForm() {
           />
         </div>
 
+        {/* Phone / Product */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Input
             label="Phone Number"
@@ -112,14 +118,16 @@ export default function ContactForm() {
           />
         </div>
 
+        {/* Quantity */}
         <Input
-          label="Estimated Quantity (kg/units per month)"
+          label="Estimated Quantity (kg / units per month)"
           name="quantity"
           value={formData.quantity}
           onChange={handleChange}
-          placeholder="e.g., 100 kg, 500 units"
+          placeholder="e.g. 100 kg, 500 units"
         />
 
+        {/* Message */}
         <Textarea
           label="Message *"
           name="message"
@@ -128,9 +136,20 @@ export default function ContactForm() {
           required
         />
 
+        {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-orange-600 text-white px-6 py-3 rounded-md font-medium hover:bg-orange-700 transition-colors focus:ring-2 focus:ring-orange-500"
+          className="
+            w-full inline-flex items-center justify-center
+            px-6 py-3 rounded-md
+            font-semibold
+            text-white
+            bg-gradient-brand
+            hover:brightness-110
+            transition
+            focus-visible:outline-none
+            focus-visible:ring-2 focus-visible:ring-ring
+          "
         >
           Send Inquiry
         </button>

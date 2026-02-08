@@ -32,8 +32,8 @@ export default function FilteredProductList({ products, categories = [] }) {
       {/* Filter Section */}
       <div className="mb-8">
         <div className="flex items-center space-x-4 mb-4">
-          <Filter className="h-5 w-5 text-gray-500" />
-          <span className="text-sm font-medium text-gray-700">
+          <Filter className="h-5 w-5 text-muted-foreground" />
+          <span className="text-sm font-medium text-foreground">
             Filter by category:
           </span>
         </div>
@@ -45,8 +45,8 @@ export default function FilteredProductList({ products, categories = [] }) {
               onClick={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 selectedCategory === category
-                  ? "bg-orange-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-orange-600 text-white dark:bg-orange-500"
+                  : "bg-muted text-muted-foreground hover:bg-accent"
               }`}
             >
               {category}
@@ -61,7 +61,7 @@ export default function FilteredProductList({ products, categories = [] }) {
           {/* Show products grouped by category */}
           {allCategories.slice(1).map((category) => (
             <div key={category} className="mb-12">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">{category}</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-6">{category}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {productsByCategory[category]?.map((product) => (
                   <ProductCard key={product.id} {...product} />
@@ -82,7 +82,7 @@ export default function FilteredProductList({ products, categories = [] }) {
           {/* Empty State */}
           {filteredProducts.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">
+              <p className="text-muted-foreground text-lg">
                 No products found in this category.
               </p>
             </div>

@@ -16,8 +16,11 @@ const CURRENCY_MAP = {
 export function CurrencyProvider({ children }) {
   const [currency, setCurrency] = useState(CURRENCY_MAP.US);
   const [isLoading, setIsLoading] = useState(true);
+  const [locale, setLocale] = useState("en-US");
 
   useEffect(() => {
+    setLocale(navigator.language || "en-US");
+
     const detectRegion = async () => {
       try {
         const res = await fetch("https://ipapi.co/json/");
@@ -41,7 +44,7 @@ export function CurrencyProvider({ children }) {
   const formatPrice = (usdAmount) => {
     const converted = usdAmount * currency.rate;
     try {
-      return new Intl.NumberFormat(undefined, {
+      return new Intl.NumberFormat(locale, {
         style: "currency",
         currency: currency.code,
         minimumFractionDigits: 2,
