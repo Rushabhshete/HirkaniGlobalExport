@@ -1,7 +1,11 @@
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
-import ContactForm from "@/components/ContactForm";
+import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { Info } from "@/helper/contact-page-helper";
+
+const ContactForm = dynamic(() => import("@/components/ContactForm"), {
+  suspense: true,
+});
 
 export default function ContactPage() {
   return (

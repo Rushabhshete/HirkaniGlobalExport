@@ -20,15 +20,17 @@ export default function Footer() {
           <div className="lg:col-span-2">
                        <Link href="/" className="flex items-center ">
               <Image
-                src="/mainLogo.png"
-                alt="Harkani Global"
+                src="/fourzaalogo.png"
+                alt="Fourzaa Global"
                 width={80}
                 height={80}
                 className="object-contain"
                 priority
+                sizes="80px"
+                quality={80}
               />
               <span className="text-lg sm:text-xl font-bold text-foreground">
-                Harkani
+                Fourzaa
                 <span className="bg-gradient-brand bg-clip-text text-transparent">
                   Global
                 </span>
@@ -137,7 +139,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="border-t border-border mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-sm glass-text-muted">
-          <p>© 2026Hirkani Global All rights reserved.</p>
+          <p>© 2026 Fourzaa Global All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link
               href="/sitemap"

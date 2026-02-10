@@ -3,8 +3,8 @@ import { products } from "@/data/products"; //
 import { ChevronRight, Globe, Shield, Package } from "lucide-react";
 
 export const metadata = {
-  title: "Sitemap |Hirkani Global",
-  description: "A complete map of all pages, products, and legal policies on theHirkani Global website.",
+  title: "Sitemap |Fourzaa Global",
+  description: "A complete map of all pages, products, and legal policies on theFourzaa Global website.",
 };
 
 export default function Sitemap() {

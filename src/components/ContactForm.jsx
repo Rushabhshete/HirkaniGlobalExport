@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { Loader2 } from "lucide-react";
 import { Input, Textarea } from "@/helper/contact-page-helper";
 
 export default function ContactForm() {
@@ -22,6 +23,8 @@ export default function ContactForm() {
     message: "",
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
     if (prefilledProduct || prefilledQuantity) {
       setFormData((prev) => ({
@@ -39,26 +42,46 @@ export default function ContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    if (!formData.name || !formData.email || !formData.message) {
+    // Trim all inputs
+    const trimmedData = Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [key, typeof value === 'string' ? value.trim() : value])
+    );
+    setFormData(trimmedData);
+
+    if (!trimmedData.name || !trimmedData.email || !trimmedData.message) {
       toast.error("Please fill in all required fields");
+      setIsSubmitting(false);
       return;
     }
 
-    toast.success(
-      "Thank you for your inquiry! We will contact you within 24 hours."
-    );
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedData.email)) {
+      toast.error("Please enter a valid email address");
+      setIsSubmitting(false);
+      return;
+    }
 
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      country: "",
-      phone: "",
-      product: "",
-      quantity: "",
-      message: "",
-    });
+    // Simulate submission delay
+    setTimeout(() => {
+      toast.success(
+        "Thank you for your inquiry! We will contact you within 24 hours."
+      );
+
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        country: "",
+        phone: "",
+        product: "",
+        quantity: "",
+        message: "",
+      });
+      setIsSubmitting(false);
+    }, 2000);
   };
 
   return (
@@ -139,6 +162,7 @@ export default function ContactForm() {
         {/* Submit */}
         <button
           type="submit"
+          disabled={isSubmitting}
           className="
             w-full inline-flex items-center justify-center
             px-6 py-3 rounded-md
@@ -146,12 +170,20 @@ export default function ContactForm() {
             text-white
             bg-gradient-brand
             hover:brightness-110
+            disabled:opacity-50 disabled:cursor-not-allowed
             transition
             focus-visible:outline-none
             focus-visible:ring-2 focus-visible:ring-ring
           "
         >
-          Send Inquiry
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Sending...
+            </>
+          ) : (
+            "Send Inquiry"
+          )}
         </button>
       </form>
     </div>

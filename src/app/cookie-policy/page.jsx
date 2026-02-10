@@ -1,7 +1,7 @@
 export const metadata = {
-  title: "Cookie Policy |Hirkani Global",
+  title: "Cookie Policy |Fourzaa Global",
   description:
-    "Learn howHirkani Global uses cookies to improve your experience and manage global export inquiries.",
+    "Learn howFourzaa Global uses cookies to improve your experience and manage global export inquiries.",
 };
 
 export default function CookiePolicy() {
@@ -14,7 +14,7 @@ export default function CookiePolicy() {
             Cookie Policy
           </h1>
           <p className="text-foreground/70">
-            This Cookie Policy explains howHirkani Global uses cookies and
+            This Cookie Policy explains howFourzaa Global uses cookies and
             similar technologies to recognize visitors, improve website
             performance, and support export-related inquiries.
           </p>

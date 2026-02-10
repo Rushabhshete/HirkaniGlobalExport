@@ -1,5 +1,3 @@
-"use client";
-
 import { Package, Shield, Truck, Award } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 

@@ -27,15 +27,17 @@ export default function Header() {
             {/* LOGO */}
             <Link href="/" className="flex items-center ">
               <Image
-                src="/mainLogo.png"
-                alt="Harkani Global"
-                width={60}
-                height={60}
+                src="/fourzaalogo.png"
+                alt="Fourzaa Global"
+                width={50}
+                height={50}
                 className="object-contain"
                 priority
+                sizes="50px"
+                quality={80}
               />
               <span className="text-lg sm:text-xl font-bold text-foreground">
-                Harkani
+                Fourzaa
                 <span className="bg-gradient-brand bg-clip-text text-transparent">
                   Global
                 </span>
@@ -82,6 +84,7 @@ export default function Header() {
                 onClick={() => setIsMenuOpen((v) => !v)}
                 className="p-2 rounded-md hover:bg-accent transition text-foreground"
                 aria-label="Toggle menu"
+                aria-expanded={isMenuOpen}
               >
                 {isMenuOpen ? (
                   <X className="h-6 w-6" />

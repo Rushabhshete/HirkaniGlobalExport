@@ -1,8 +1,8 @@
-# 🌶️ Hirkani Global — Premium Spice Exporters
+# 🌶️ Fourzaa Global — Premium Spice Exporters
 
 A professional **spice export business website** built with **Next.js (App Router)**, focused on performance, trust, and international buyer readiness.
 
-This project represents **Hirkani Global**, an Indian exporter of premium-quality spices.
+This project represents **Fourzaa Global**, an Indian exporter of premium-quality spices.
 
 ---
 
@@ -17,7 +17,7 @@ This project represents **Hirkani Global**, an Indian exporter of premium-qualit
 
 ## 🎯 Project Purpose
 
-- Present Hirkani Global as a **trusted global spice exporter**
+- Present Fourzaa Global as a **trusted global spice exporter**
 - Clean, export-grade UI (corporate & professional)
 - Strong branding with symbol-based logo
 - Fully responsive (desktop, tablet, mobile)

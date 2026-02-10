@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Award, Globe, Truck } from "lucide-react";
 import HeroStatsTrigger from "./HeroStatsTrigger";
+import HeroStat from "./HeroStat";
 
 export default function Hero() {
   return (
@@ -82,13 +83,4 @@ export default function Hero() {
 
 /* ---------- Stat ---------- */
 
-function HeroStat({ icon: Icon, label }) {
-  return (
-    <div className="text-center md:text-left">
-      <Icon className="h-7 w-7 mb-2 mx-auto md:mx-0 text-primary" />
-      <p className="text-xs md:text-sm font-semibold uppercase tracking-tight text-foreground">
-        {label}
-      </p>
-    </div>
-  );
-}
+

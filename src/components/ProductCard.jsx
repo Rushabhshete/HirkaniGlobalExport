@@ -15,7 +15,7 @@ export default function ProductCard({
   origin = "India",
   isComingSoon = false,
 }) {
-  const { formatPrice } = useCurrency();
+  const { formatPrice, isLoading } = useCurrency();
 
   const displayPrice = useMemo(() => {
     if (!price && price !== 0) return "";
@@ -59,6 +59,7 @@ export default function ProductCard({
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 hover:scale-105"
+          quality={70}
         />
       </div>
 
@@ -107,7 +108,11 @@ export default function ProductCard({
         {/* Footer */}
         <div className="flex items-center justify-between mt-4">
           <p className="text-primary font-bold">
-            {displayPrice}
+            {isLoading ? (
+              <span className="inline-block animate-pulse bg-gray-300 h-5 w-20 rounded"></span>
+            ) : (
+              displayPrice
+            )}
           </p>
 
           {!isComingSoon && (

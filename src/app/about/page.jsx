@@ -34,7 +34,7 @@ export default function AboutPage() {
               <p>
                 For over 5 years,{" "}
                 <span className="font-semibold text-primary">
-                  Hirkani Global.
+                  Fourzaa Global.
                 </span>{" "}
                 has been India’s trusted gateway for premium spices and
                 artisanal chutneys.
@@ -56,6 +56,8 @@ export default function AboutPage() {
               height={600}
               className="relative rounded-2xl object-cover shadow-2xl border border-border"
               priority
+              quality={70}
+              sizes="800px"
             />
           </div>
         </div>
@@ -130,7 +132,7 @@ export default function AboutPage() {
                   className="p-6 rounded-2xl bg-background border border-border text-center"
                 >
                   <c.icon className="w-10 h-10 text-primary mx-auto mb-4" />
-                  <h4 className="font-bold text-foreground">{c.title}</h4>
+                  <h3 className="font-bold text-foreground">{c.title}</h3>
                   <p className="text-sm glass-text-subtle">{c.desc}</p>
                 </div>
               ))}

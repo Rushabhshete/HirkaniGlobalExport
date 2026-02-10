@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 
 export default function HeroStatsTrigger() {
@@ -11,6 +9,8 @@ export default function HeroStatsTrigger() {
         fill
         priority
         className="rounded-2xl shadow-xl object-cover"
+        sizes="(max-width: 768px) 100vw, 50vw"
+        quality={70}
       />
 
       {/* Stats Badge */}
