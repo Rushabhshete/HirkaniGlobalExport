@@ -6,7 +6,12 @@
 @tailwind utilities;
 
 /* =========================
-   DESIGN TOKENS
+   GOOGLE FONTS
+   ========================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* =========================
+   DESIGN TOKENS — LIGHT
    ========================= */
 
 :root {
@@ -14,27 +19,35 @@
 
   /* Backgrounds */
   --background: 0 0% 100%;
-  --surface: 0 0% 98%;
-  --foreground: 222 22% 10%;
+  --surface: 40 20% 97%;
+  --foreground: 150 20% 10%;
 
-  /* Brand (Orange-600) */
-  --primary: 24 95% 53%;
+  /* Brand — Dark Forest Green */
+  --primary: 148 63% 23%;
   --primary-foreground: 0 0% 100%;
 
-  /* Accent */
-  --accent: 32 100% 95%;
-  --accent-foreground: 24 95% 53%;
+  /* Gold accent */
+  --gold: 38 70% 47%;
+  --gold-foreground: 0 0% 100%;
+
+  /* Accent — warm cream */
+  --accent: 40 40% 96%;
+  --accent-foreground: 148 63% 23%;
 
   /* UI */
   --border: 220 13% 91%;
   --input: 220 13% 91%;
-  --ring: 24 95% 53%;
+  --ring: 148 63% 23%;
 
-  /* Gradient */
-  --gradient-start: 24 95% 53%; /* orange */
-  --gradient-end: 0 85% 55%;    /* red */
+  /* Gradient — green */
+  --gradient-start: 148 63% 20%;
+  --gradient-end: 148 45% 32%;
 
-  --radius: 0.375rem;
+  /* Footer dark green */
+  --footer-bg: 150 40% 12%;
+  --footer-text: 0 0% 90%;
+
+  --radius: 0.5rem;
 }
 
 /* =========================
@@ -45,26 +58,34 @@
   color-scheme: dark;
 
   /* Backgrounds */
-  --background: 0 0% 15%;        /* #262626 */
-  --surface: 0 0% 20%;           /* lighter #262626 */
-  --foreground: 0 0% 96%;
+  --background: 150 15% 8%;
+  --surface: 150 12% 12%;
+  --foreground: 0 0% 95%;
 
   /* Brand */
-  --primary: 24 95% 60%;
-  --primary-foreground: 0 0% 10%;
+  --primary: 148 55% 40%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Gold */
+  --gold: 38 65% 55%;
+  --gold-foreground: 0 0% 10%;
 
   /* Accent */
-  --accent: 0 0% 22%;
-  --accent-foreground: 24 95% 60%;
+  --accent: 150 12% 16%;
+  --accent-foreground: 148 55% 50%;
 
   /* UI */
-  --border: 0 0% 30%;
-  --input: 0 0% 30%;
-  --ring: 24 95% 60%;
+  --border: 150 10% 22%;
+  --input: 150 10% 22%;
+  --ring: 148 55% 40%;
 
   /* Gradient */
-  --gradient-start: 24 95% 60%;
-  --gradient-end: 0 85% 60%;
+  --gradient-start: 148 55% 30%;
+  --gradient-end: 148 40% 40%;
+
+  /* Footer */
+  --footer-bg: 150 30% 6%;
+  --footer-text: 0 0% 85%;
 }
 
 /* =========================
@@ -76,7 +97,12 @@
     border-color: hsl(var(--border));
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     @apply antialiased;
@@ -87,10 +113,19 @@
    UTILITIES
    ========================= */
 @layer utilities {
+
   /* =========================
      BRAND GRADIENT
      ========================= */
   .bg-gradient-brand {
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--gradient-start)),
+      hsl(var(--gradient-end))
+    );
+  }
+
+  .bg-gradient-brand-h {
     background-image: linear-gradient(
       to right,
       hsl(var(--gradient-start)),
@@ -99,70 +134,138 @@
   }
 
   /* =========================
-     ADVANCED GLASS (IMPROVED)
+     GLASS EFFECT
      ========================= */
-
   .glass {
     position: relative;
     background:
       linear-gradient(
         135deg,
-        hsla(0, 0%, 100%, 0.35),
-        hsla(0, 0%, 100%, 0.08)
+        hsl(var(--surface) / 0.9),
+        hsl(var(--background) / 0.6)
       );
     backdrop-filter: blur(22px) saturate(170%);
     -webkit-backdrop-filter: blur(22px) saturate(170%);
     border-radius: var(--radius);
-    border: 1px solid hsla(0, 0%, 100%, 0.35);
+    border: 1px solid hsl(var(--border));
+    color: hsl(var(--foreground));
     box-shadow:
-      inset 0 1px 0 hsla(0, 0%, 100%, 0.45),
-      inset 0 -1px 0 hsla(0, 0%, 100%, 0.15),
-      0 24px 48px hsla(0, 0%, 0%, 0.18);
+      inset 0 1px 0 hsl(0 0% 100% / 0.25),
+      inset 0 -1px 0 hsl(0 0% 100% / 0.08),
+      0 12px 36px hsl(0 0% 0% / 0.12);
   }
 
- .glass {
-  position: relative;
-  background:
-    linear-gradient(
-      135deg,
-      hsl(var(--surface) / 0.9),
-      hsl(var(--background) / 0.6)
-    );
-  backdrop-filter: blur(22px) saturate(170%);
-  -webkit-backdrop-filter: blur(22px) saturate(170%);
-  border-radius: var(--radius);
-  border: 1px solid hsl(var(--border));
-  color: hsl(var(--foreground));
-  box-shadow:
-    inset 0 1px 0 hsl(0 0% 100% / 0.35),
-    inset 0 -1px 0 hsl(0 0% 100% / 0.12),
-    0 24px 48px hsl(0 0% 0% / 0.18);
-}
-
-
-  /* Dark mode glass tuning */
-.dark .glass {
-  background:
-    linear-gradient(
-      135deg,
-      hsl(0 0% 100% / 0.10),
-      hsl(0 0% 100% / 0.03)
-    );
-  border: 1px solid hsl(var(--border));
-  box-shadow:
-    inset 0 1px 0 hsl(0 0% 100% / 0.18),
-    0 24px 48px hsl(0 0% 0% / 0.45);
-}
-
+  .dark .glass {
+    background:
+      linear-gradient(
+        135deg,
+        hsl(0 0% 100% / 0.08),
+        hsl(0 0% 100% / 0.02)
+      );
+    border: 1px solid hsl(var(--border));
+    box-shadow:
+      inset 0 1px 0 hsl(0 0% 100% / 0.12),
+      0 12px 36px hsl(0 0% 0% / 0.35);
+  }
 
   /* Extra thick glass (hero / navbar) */
   .glass-thick {
-    backdrop-filter: blur(12px) saturate(50%);
-    -webkit-backdrop-filter: blur(32px) saturate(190%);
+    backdrop-filter: blur(28px) saturate(190%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+  }
+
+  /* Glass text helpers */
+  .glass-text {
+    color: hsl(var(--foreground));
+  }
+
+  .glass-text-muted {
+    color: hsl(var(--foreground) / 0.7);
+  }
+
+  .glass-text-subtle {
+    color: hsl(var(--foreground) / 0.5);
   }
 
   /* =========================
-     ANIMATION SYSTEM (CSS ONLY)
+     PAGE BANNER
+     ========================= */
+  .page-banner {
+    color: white;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .page-banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--gradient-start) / 0.95),
+      hsl(var(--gradient-end) / 0.8)
+    );
+    z-index: 0;
+  }
+
+  .page-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.828zM11.03 0L7.372 3.657 8.787 5.07 13.857 0H11.03zm32.284 0L49.8 6.485 48.384 7.9l-7.9-7.9h2.83zM16.686 0L10.2 6.485 11.616 7.9l7.9-7.9h-2.83z' fill='%23ffffff' fill-opacity='0.04' fill-rule='evenodd'/%3E%3C/svg%3E");
+  }
+
+  /* =========================
+     WHATSAPP FLOAT
+     ========================= */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 999;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25D366;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+  }
+
+  /* =========================
+     EXPORT PROCESS TIMELINE
+     ========================= */
+  .timeline-connector {
+    position: relative;
+  }
+
+  .timeline-connector::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -2rem;
+    width: 2rem;
+    height: 2px;
+    background: hsl(var(--border));
+    transform: translateY(-50%);
+  }
+
+  .timeline-connector:last-child::after {
+    display: none;
+  }
+
+  /* =========================
+     ANIMATION SYSTEM
      ========================= */
 
   .will-animate {
@@ -190,12 +293,18 @@
     animation: slide-right 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
   }
 
+  .animate-scale-in {
+    animation: scale-in 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
   /* Stagger delays */
   .delay-100 { animation-delay: 100ms; }
   .delay-200 { animation-delay: 200ms; }
   .delay-300 { animation-delay: 300ms; }
   .delay-400 { animation-delay: 400ms; }
   .delay-500 { animation-delay: 500ms; }
+  .delay-600 { animation-delay: 600ms; }
+  .delay-700 { animation-delay: 700ms; }
 
   /* =========================
      KEYFRAMES
@@ -250,6 +359,67 @@
     }
   }
 
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes float-blob {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+      transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.95);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  .animate-blob {
+    animation: float-blob 25s infinite alternate ease-in-out;
+  }
+
+  /* Gold drop-shadow and glow effects */
+  .shadow-gold {
+    box-shadow: 0 4px 20px -2px hsla(38, 70%, 47%, 0.15);
+  }
+  .shadow-gold-hover:hover {
+    box-shadow: 0 10px 30px -4px hsla(38, 70%, 47%, 0.3);
+  }
+  .drop-shadow-gold {
+    filter: drop-shadow(0 0 8px hsla(38, 70%, 47%, 0.4));
+  }
+  .drop-shadow-gold-hover:hover {
+    filter: drop-shadow(0 0 12px hsla(38, 70%, 47%, 0.6));
+  }
+
+  /* Extra glass utility for Bento */
+  .glass-card {
+    background: linear-gradient(135deg, hsl(var(--surface) / 0.7), hsl(var(--background) / 0.4));
+    border: 1px solid hsl(var(--border) / 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .dark .glass-card {
+    background: linear-gradient(135deg, hsl(var(--surface) / 0.2), hsl(var(--background) / 0.1));
+    border: 1px solid hsl(var(--border) / 0.15);
+  }
+
   /* =========================
      ACCESSIBILITY
      ========================= */
@@ -259,7 +429,8 @@
     .animate-fade-down,
     .animate-fade-in,
     .animate-slide-left,
-    .animate-slide-right {
+    .animate-slide-right,
+    .animate-scale-in {
       animation: none !important;
     }
   }

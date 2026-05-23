@@ -1,94 +1,133 @@
 "use client";
 
 import { useState } from "react";
-import { Filter } from "lucide-react";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "./ProductCard";
+import { Download } from "lucide-react";
 
-export default function FilteredProductList({ products, categories = [] }) {
+export default function FilteredProductList({ products, categories }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const allCategories = ["All", ...categories];
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 9;
 
-  const getProductsByCategory = () => {
-    const grouped = {};
-    products.forEach((product) => {
-      if (!grouped[product.category]) {
-        grouped[product.category] = [];
-      }
-      grouped[product.category].push(product);
-    });
-    return grouped;
+  // Filter
+  const filteredProducts = selectedCategory === "All"
+    ? products
+    : products.filter(p => p.category === selectedCategory);
+
+  // Paginate
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const currentProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+
+  const handleCategoryChange = (cat) => {
+    setSelectedCategory(cat);
+    setCurrentPage(1);
   };
 
-  const filteredProducts =
-    selectedCategory === "All"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
-
-  const isShowingAllCategories = selectedCategory === "All";
-  const productsByCategory = isShowingAllCategories ? getProductsByCategory() : {};
-
   return (
-    <>
-      {/* Filter Section */}
-      <div className="mb-8">
-        <div className="flex items-center space-x-4 mb-4">
-          <Filter className="h-5 w-5 text-muted-foreground" />
-          <span className="text-sm font-medium text-foreground">
-            Filter by category:
-          </span>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          {allCategories.map((category) => (
+    <div className="flex flex-col lg:flex-row gap-8">
+      {/* LEFT SIDEBAR (Desktop) / TOP (Mobile) */}
+      <div className="w-full lg:w-72 flex-shrink-0">
+        <div className="bg-surface border border-border rounded-xl p-6 mb-6">
+          <h2 className="text-xl font-bold text-foreground mb-4">Categories</h2>
+          
+          <div className="flex lg:flex-col overflow-x-auto lg:overflow-visible gap-2 pb-2 lg:pb-0 hide-scrollbar">
             <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedCategory === category
-                  ? "bg-orange-600 text-white dark:bg-orange-500"
-                  : "bg-muted text-muted-foreground hover:bg-accent"
+              onClick={() => handleCategoryChange("All")}
+              className={`flex-shrink-0 text-left px-4 py-2 rounded-lg transition-colors ${
+                selectedCategory === "All"
+                  ? "bg-primary/10 text-primary font-semibold border-l-4 border-primary lg:rounded-l-none"
+                  : "text-foreground/70 hover:text-primary hover:bg-accent"
               }`}
             >
-              {category}
+              All Products
             </button>
-          ))}
+            
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => handleCategoryChange(cat)}
+                className={`flex-shrink-0 text-left px-4 py-2 rounded-lg transition-colors ${
+                  selectedCategory === cat
+                    ? "bg-primary/10 text-primary font-semibold border-l-4 border-primary lg:rounded-l-none"
+                    : "text-foreground/70 hover:text-primary hover:bg-accent"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Brochure Download CTA */}
+        <div className="hidden lg:block bg-gradient-brand rounded-xl p-6 text-white text-center">
+          <h3 className="text-lg font-bold mb-2">Download Brochure</h3>
+          <p className="text-sm text-white/80 mb-4">Get our complete product catalog in PDF format.</p>
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-primary rounded-lg font-bold hover:bg-gray-100 transition">
+            <Download className="w-4 h-4 mr-2" />
+            Download PDF
+          </button>
         </div>
       </div>
 
-      {/* Section-wise Products or Single Category Products */}
-      {isShowingAllCategories ? (
-        <>
-          {/* Show products grouped by category */}
-          {allCategories.slice(1).map((category) => (
-            <div key={category} className="mb-12">
-              <h2 className="text-2xl font-bold text-foreground mb-6">{category}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {productsByCategory[category]?.map((product) => (
-                  <ProductCard key={product.id} {...product} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </>
-      ) : (
-        <>
-          {/* Show flat grid for single category */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
+      {/* RIGHT SIDE: PRODUCT GRID */}
+      <div className="flex-grow">
+        <div className="mb-6 flex justify-between items-center">
+          <h2 className="text-2xl font-bold text-foreground">
+            {selectedCategory === "All" ? "All Products" : selectedCategory}
+          </h2>
+          <span className="text-sm text-foreground/60">
+            Showing {filteredProducts.length} products
+          </span>
+        </div>
+
+        {currentProducts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {currentProducts.map((product) => (
               <ProductCard key={product.id} {...product} />
             ))}
           </div>
+        ) : (
+          <div className="text-center py-20 bg-surface rounded-xl border border-border">
+            <p className="text-foreground/60">No products found in this category.</p>
+          </div>
+        )}
 
-          {/* Empty State */}
-          {filteredProducts.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">
-                No products found in this category.
-              </p>
-            </div>
-          )}
-        </>
-      )}
-    </>
+        {/* PAGINATION */}
+        {totalPages > 1 && (
+          <div className="mt-12 flex justify-center gap-2">
+            <button
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 border border-border rounded-lg disabled:opacity-50 hover:bg-accent"
+            >
+              Prev
+            </button>
+            
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`w-10 h-10 flex items-center justify-center rounded-lg transition-colors ${
+                  currentPage === i + 1
+                    ? "bg-primary text-white font-bold"
+                    : "border border-border text-foreground hover:bg-accent"
+                }`}
+              >
+                {i + 1}
+              </button>
+            ))}
+            
+            <button
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 border border-border rounded-lg disabled:opacity-50 hover:bg-accent"
+            >
+              Next
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

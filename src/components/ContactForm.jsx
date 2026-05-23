@@ -1,191 +1,181 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Loader2 } from "lucide-react";
-import { Input, Textarea } from "@/helper/contact-page-helper";
+import { getCategories } from "@/data/products";
+import { useRFQ } from "@/helper/RFQContext";
+import { Trash2, Send } from "lucide-react";
 
 export default function ContactForm() {
-  const searchParams = useSearchParams();
-
-  const prefilledProduct = searchParams.get("product") || "";
-  const prefilledQuantity = searchParams.get("quantity") || "";
-
+  const { rfqItems, isHydrated, updateQuantity, removeFromRFQ, clearRFQ } = useRFQ();
+  const [isRfqMode, setIsRfqMode] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    company: "",
-    country: "",
-    phone: "",
-    product: prefilledProduct,
-    quantity: prefilledQuantity,
+    product: "",
+    quantity: "",
     message: "",
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const categories = getCategories();
+
+  // Detect RFQ query parameter safely without Next.js Suspense warnings
   useEffect(() => {
-    if (prefilledProduct || prefilledQuantity) {
-      setFormData((prev) => ({
-        ...prev,
-        product: prefilledProduct,
-        quantity: prefilledQuantity,
-      }));
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      setIsRfqMode(params.get("rfq") === "true");
     }
-  }, [prefilledProduct, prefilledQuantity]);
+  }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Trim all inputs
-    const trimmedData = Object.fromEntries(
-      Object.entries(formData).map(([key, value]) => [key, typeof value === 'string' ? value.trim() : value])
-    );
-    setFormData(trimmedData);
-
-    if (!trimmedData.name || !trimmedData.email || !trimmedData.message) {
-      toast.error("Please fill in all required fields");
-      setIsSubmitting(false);
-      return;
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    if (isRfqMode && rfqItems.length > 0) {
+      toast.success("Bulk RFQ submitted successfully! Our export desk will email your quotes shortly.");
+      clearRFQ();
+    } else {
+      toast.success("Message sent successfully! We will contact you soon.");
     }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(trimmedData.email)) {
-      toast.error("Please enter a valid email address");
-      setIsSubmitting(false);
-      return;
-    }
-
-    // Simulate submission delay
-    setTimeout(() => {
-      toast.success(
-        "Thank you for your inquiry! We will contact you within 24 hours."
-      );
-
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        country: "",
-        phone: "",
-        product: "",
-        quantity: "",
-        message: "",
-      });
-      setIsSubmitting(false);
-    }, 2000);
+    
+    setFormData({ name: "", email: "", product: "", quantity: "", message: "" });
+    setIsSubmitting(false);
   };
 
   return (
-    <div className="lg:col-span-2 animate-fade-up will-animate">
-      <form
-        onSubmit={handleSubmit}
-        className="glass glass-thick p-8 rounded-2xl space-y-6"
-      >
-        {/* Name / Email */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Input
-            label="Full Name *"
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label htmlFor="name" className="block text-sm font-semibold text-foreground mb-2">Full Name</label>
+          <input
+            type="text"
+            id="name"
             name="name"
+            required
             value={formData.name}
             onChange={handleChange}
-            required
+            className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
+            placeholder="John Doe"
           />
-          <Input
-            label="Email Address *"
-            name="email"
+        </div>
+        <div>
+          <label htmlFor="email" className="block text-sm font-semibold text-foreground mb-2">Email Address</label>
+          <input
             type="email"
+            id="email"
+            name="email"
+            required
             value={formData.email}
             onChange={handleChange}
-            required
+            className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
+            placeholder="john@example.com"
           />
         </div>
+      </div>
 
-        {/* Company / Country */}
+      {isRfqMode && isHydrated && rfqItems.length > 0 ? (
+        <div className="border border-border rounded-xl p-5 bg-accent/40 mb-6">
+          <h3 className="text-sm font-bold text-foreground mb-4">Requesting Bulk Quotes For:</h3>
+          <div className="space-y-3 max-h-80 overflow-y-auto pr-1">
+            {rfqItems.map((item) => (
+              <div key={item.slug} className="flex items-center justify-between gap-4 bg-background border border-border p-3 rounded-lg shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div className="relative h-10 w-10 overflow-hidden rounded bg-accent border border-border flex-shrink-0">
+                    <img src={item.image} alt={item.name} className="object-cover h-full w-full" />
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-bold text-foreground truncate">{item.name}</h4>
+                    <p className="text-[10px] text-foreground/50">{item.category}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  <div className="flex items-center gap-1.5">
+                    <input
+                      type="number"
+                      min="0.1"
+                      step="0.1"
+                      value={item.quantity}
+                      onChange={(e) => updateQuantity(item.slug, parseFloat(e.target.value) || 0.1)}
+                      className="w-16 px-1 py-1 bg-background border border-border rounded text-xs text-center font-bold focus:ring-1 focus:ring-primary focus:outline-none"
+                    />
+                    <span className="text-xs font-semibold text-foreground/60">{item.unit}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeFromRFQ(item.slug)}
+                    className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-full transition-colors"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Input
-            label="Company Name"
-            name="company"
-            value={formData.company}
-            onChange={handleChange}
-          />
-          <Input
-            label="Country"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-          />
+          <div>
+            <label htmlFor="product" className="block text-sm font-semibold text-foreground mb-2">Product of Interest</label>
+            <select
+              id="product"
+              name="product"
+              required={!isRfqMode}
+              value={formData.product}
+              onChange={handleChange}
+              className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground appearance-none"
+            >
+              <option value="" disabled>Select a Category</option>
+              {categories.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="quantity" className="block text-sm font-semibold text-foreground mb-2">Quantity Required (MT)</label>
+            <input
+              type="text"
+              id="quantity"
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+              className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground"
+              placeholder="e.g., 5 MT"
+            />
+          </div>
         </div>
+      )}
 
-        {/* Phone / Product */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Input
-            label="Phone Number"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-          />
-          <Input
-            label="Product Interest"
-            name="product"
-            value={formData.product}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* Quantity */}
-        <Input
-          label="Estimated Quantity (kg / units per month)"
-          name="quantity"
-          value={formData.quantity}
-          onChange={handleChange}
-          placeholder="e.g. 100 kg, 500 units"
-        />
-
-        {/* Message */}
-        <Textarea
-          label="Message *"
+      <div>
+        <label htmlFor="message" className="block text-sm font-semibold text-foreground mb-2">Additional Details</label>
+        <textarea
+          id="message"
           name="message"
+          rows="5"
+          required
           value={formData.message}
           onChange={handleChange}
-          required
-        />
+          className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-foreground resize-none"
+          placeholder="Please provide details about packaging size (e.g. 25kg PP bags), shipping terms (FOB/CIF), and port of delivery."
+        ></textarea>
+      </div>
 
-        {/* Submit */}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="
-            w-full inline-flex items-center justify-center
-            px-6 py-3 rounded-md
-            font-semibold
-            text-white
-            bg-gradient-brand
-            hover:brightness-110
-            disabled:opacity-50 disabled:cursor-not-allowed
-            transition
-            focus-visible:outline-none
-            focus-visible:ring-2 focus-visible:ring-ring
-          "
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Sending...
-            </>
-          ) : (
-            "Send Inquiry"
-          )}
-        </button>
-      </form>
-    </div>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full flex justify-center items-center px-6 py-4 bg-gradient-brand text-white font-bold rounded-lg hover:brightness-110 shadow-md shadow-gold transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+      >
+        <Send className="w-5 h-5 mr-2" />
+        {isSubmitting ? "Sending..." : isRfqMode && rfqItems.length > 0 ? "Submit Bulk RFQ Inquiry" : "Send Message"}
+      </button>
+    </form>
   );
 }

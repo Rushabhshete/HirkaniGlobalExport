@@ -1,86 +1,51 @@
 import Link from "next/link";
-import { ArrowRight, Award, Globe, Truck } from "lucide-react";
-import HeroStatsTrigger from "./HeroStatsTrigger";
-import HeroStat from "./HeroStat";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 
 export default function Hero() {
   return (
-    <section className="relative bg-background py-12 sm:py-16 overflow-hidden">
-      {/* subtle accent glow */}
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-accent/20 dark:bg-accent/10" />
+    <section className="relative w-full min-h-[70vh] flex items-center justify-start overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <ImageWithSkeleton
+          src="/images/hero_background.png"
+          alt="Agriculture Field"
+          fill
+          priority
+          imageClassName="object-cover"
+        />
+        {/* Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/30"></div>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* LEFT CONTENT */}
-          <div>
-            {/* Heading */}
-            <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight text-foreground animate-fade-up will-animate delay-100">
-              Authentic Indian{" "}
-              <span className="bg-gradient-brand bg-clip-text text-transparent">
-                Spices
-              </span>
-              <br />
-              for Global Markets
-            </h1>
+      {/* Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
+        <div className="max-w-2xl text-white">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-up will-animate">
+            <span className="block text-gold">Exporting Premium</span>
+            <span className="block">Indian Agro Products</span>
+            <span className="block">Worldwide</span>
+          </h1>
+          
+          <p className="text-lg md:text-xl text-gray-200 mb-8 animate-fade-up will-animate delay-100">
+            Trusted supplier of spices, agricultural, herbal, and dehydrated products to global markets with exceptional quality and reliability.
+          </p>
 
-            {/* Description */}
-            <p className="mt-6 mb-8 max-w-lg text-lg text-foreground/70 animate-fade-up will-animate delay-200">
-              Export-quality Indian spices and chutneys, sourced directly from
-              farmers and processed under international quality standards for
-              global buyers.
-            </p>
-
-            {/* CTA BUTTONS */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-10 animate-fade-up will-animate delay-300">
-              <Link
-                href="/products"
-                className="
-                  inline-flex items-center justify-center
-                  px-6 py-3 rounded-lg
-                  font-medium text-white
-                  bg-gradient-brand
-                  hover:brightness-110
-                  transition
-                  group
-                "
-              >
-                View Products
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Link>
-
-              <Link
-                href="/contact"
-                className="
-                  inline-flex items-center justify-center
-                  px-8 py-3 rounded-xl
-                  bg-surface border border-border
-                  font-semibold
-                  hover:bg-accent
-                  transition
-                "
-              >
-                Request Quote
-              </Link>
-            </div>
-
-            {/* STATS */}
-            <div className="grid grid-cols-3 gap-6 rounded-xl bg-accent border border-border p-6 animate-fade-up will-animate delay-400">
-              <HeroStat icon={Award} label="Export Quality" />
-              <HeroStat icon={Globe} label="Global Shipping" />
-              <HeroStat icon={Truck} label="Fast Delivery" />
-            </div>
-          </div>
-
-          {/* RIGHT CONTENT */}
-          <div className="animate-slide-left will-animate delay-200">
-            <HeroStatsTrigger />
+          <div className="flex flex-wrap gap-4 animate-fade-up will-animate delay-200">
+            <Link
+              href="/contact"
+              className="px-8 py-3.5 text-base font-bold rounded-lg text-white bg-gradient-brand hover:brightness-110 transition shadow-lg"
+            >
+              Request Quote
+            </Link>
+            <Link
+              href="/products"
+              className="px-8 py-3.5 text-base font-bold rounded-lg text-white border-2 border-white/80 hover:bg-white/10 hover:border-white transition backdrop-blur-sm"
+            >
+              View Products
+            </Link>
           </div>
         </div>
       </div>
     </section>
   );
 }
-
-/* ---------- Stat ---------- */
-
-

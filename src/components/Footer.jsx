@@ -1,158 +1,90 @@
 import Link from "next/link";
-import {
-  Leaf,
-  Mail,
-  Phone,
-  MapPin,
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-} from "lucide-react";
 import Image from "next/image";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-surface text-foreground border-t border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
+    <footer className="bg-footer-bg text-footer-text py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
+          
           {/* Brand */}
           <div className="lg:col-span-2">
-                       <Link href="/" className="flex items-center ">
-              <Image
-                src="/fourzaalogo.png"
-                alt="Fourzaa Global"
-                width={80}
-                height={80}
-                className="object-contain"
-                priority
-                sizes="80px"
-                quality={80}
-              />
-              <span className="text-lg sm:text-xl font-bold text-foreground">
-                Fourzaa
-                <span className="bg-gradient-brand bg-clip-text text-transparent">
-                  Global
-                </span>
+            <Link href="/" className="flex items-center flex-shrink-0 mb-6">
+              <div className="bg-white p-1 rounded-md inline-block">
+                 <Image
+                   src="/fourzaa_logo_new.png"
+                   alt="Fourzaa Global"
+                   width={40}
+                   height={40}
+                   className="object-contain"
+                 />
+              </div>
+              <span className="text-xl font-bold text-white ml-3">
+                Fourzaa <span className="text-gold">Global</span>
               </span>
             </Link>
-
-            <p className="glass-text-muted mb-6 max-w-md leading-relaxed">
-              Premium Indian spices and chutneys exported worldwide. Quality
-              assured, tradition preserved.
+            <p className="text-footer-text/80 mb-6 leading-relaxed max-w-sm">
+              Exporting premium Indian agro products worldwide with quality and reliability.
             </p>
-
             <div className="flex space-x-4">
-              {[
-                { icon: Facebook, label: "Facebook" },
-                { icon: Twitter, label: "Twitter" },
-                { icon: Instagram, label: "Instagram" },
-                { icon: Linkedin, label: "LinkedIn" },
-              ].map((social, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  aria-label={social.label}
-                  className="bg-accent p-2 rounded-full glass-text-muted hover:bg-primary hover:text-white transition-all duration-300 hover:-translate-y-1"
-                >
-                  <social.icon className="h-5 w-5" />
-                </a>
-              ))}
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
+                <Linkedin className="w-5 h-5" />
+              </a>
             </div>
           </div>
 
-          {/* Company Links */}
+          {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-foreground">
-              Company
-            </h3>
+            <h3 className="text-white font-semibold mb-6">Quick Links</h3>
             <ul className="space-y-4">
-              {[
-                { name: "Products", href: "/products" },
-                { name: "About Us", href: "/about" },
-                { name: "Contact", href: "/contact" },
-              ].map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="glass-text-muted hover:text-primary transition-all duration-300 flex items-center hover:translate-x-1"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              <li><Link href="/" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Home</Link></li>
+              <li><Link href="/about" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">About Us</Link></li>
+              <li><Link href="/products" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Products</Link></li>
+              <li><Link href="/export-process" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Export Process</Link></li>
+              <li><Link href="/contact" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Contact Us</Link></li>
             </ul>
           </div>
 
-          {/* Legal Links */}
+          {/* Our Products */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-foreground">
-              Legal
-            </h3>
+            <h3 className="text-white font-semibold mb-6">Our Products</h3>
             <ul className="space-y-4">
-              {[
-                { name: "Privacy Policy", href: "/privacy-policy" },
-                { name: "Terms & Conditions", href: "/terms" },
-                { name: "Refund Policy", href: "/refund-policy" },
-                { name: "Shipping Policy", href: "/shipping-policy" },
-                { name: "Disclaimer", href: "/disclaimer" },
-              ].map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="glass-text-muted hover:text-primary transition-all duration-300 flex items-center hover:translate-x-1"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              <li><Link href="/products?category=Spices" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Spices</Link></li>
+              <li><Link href="/products?category=Agricultural+Products" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Agricultural Products</Link></li>
+              <li><Link href="/products?category=Herbal+Products" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Herbal Products</Link></li>
+              <li><Link href="/products?category=Dehydrated+Products" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Dehydrated Products</Link></li>
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Support */}
           <div>
-            <h3 className="text-lg font-semibold mb-6 text-foreground">
-              Contact Info
-            </h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3 group">
-                <Mail className="h-5 w-5 text-primary mt-0.5 group-hover:scale-110 transition-transform" />
-                <span className="glass-text-muted text-sm hover:text-foreground transition-colors">
-                  export@spicecompany.com
-                </span>
-              </div>
-              <div className="flex items-start space-x-3 group">
-                <Phone className="h-5 w-5 text-primary mt-0.5 group-hover:scale-110 transition-transform" />
-                <span className="glass-text-muted text-sm hover:text-foreground transition-colors">
-                  +91 98765 43210
-                </span>
-              </div>
-              <div className="flex items-start space-x-3 group">
-                <MapPin className="h-5 w-5 text-primary mt-0.5 group-hover:scale-110 transition-transform" />
-                <span className="glass-text-muted text-sm hover:text-foreground transition-colors">
-                  Mumbai, India
-                </span>
-              </div>
-            </div>
+            <h3 className="text-white font-semibold mb-6">Support</h3>
+            <ul className="space-y-4">
+              <li><Link href="/contact" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Request Quote</Link></li>
+              <li><Link href="/private-labeling" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Private Labeling</Link></li>
+              <li><Link href="#" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Download Brochure</Link></li>
+              <li><Link href="#" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">FAQs</Link></li>
+            </ul>
           </div>
+
         </div>
 
-        {/* Bottom */}
-        <div className="border-t border-border mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-sm glass-text-muted">
-          <p>© 2026 Fourzaa Global All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link
-              href="/sitemap"
-              className="hover:text-primary transition-colors cursor-pointer"
-            >
-              Sitemap
-            </Link>
-            <Link
-              href="/cookie-policy"
-              className="hover:text-primary transition-colors cursor-pointer"
-            >
-              Cookies
-            </Link>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-footer-text/60">
+          <p>&copy; {new Date().getFullYear()} Fourzaa Global. All rights reserved.</p>
+          <div className="flex space-x-6">
+            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="#" className="hover:text-white transition-colors">Terms & Conditions</Link>
           </div>
         </div>
       </div>

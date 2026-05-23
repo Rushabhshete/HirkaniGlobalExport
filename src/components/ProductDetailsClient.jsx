@@ -1,219 +1,136 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import Image from "next/image";
+import { useState, useEffect } from "react";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 import Link from "next/link";
-import { Plus, Minus } from "lucide-react";
+import { CircleDot } from "lucide-react";
 import { useCurrency } from "@/helper/CurrencyContext";
+import ProductCard from "./ProductCard";
+import { getRelatedProducts } from "@/data/products";
+
+import { useRFQ } from "@/helper/RFQContext";
 
 export default function ProductDetailsClient({ product }) {
+  const { formatPrice, isLoading } = useCurrency();
   const [mainImage, setMainImage] = useState(product.image);
-  const [quantity, setQuantity] = useState(1);
-  const [packagingOption, setPackagingOption] = useState(
-    product.packaging?.[0],
-  );
+  const { addToRFQ, rfqItems } = useRFQ();
 
-  const { formatPrice } = useCurrency();
+  useEffect(() => {
+    setMainImage(product.image);
+  }, [product.image]);
 
-  const gallery = [product.image, "/placeholder.png", "/placeholder.png"];
+  const isAdded = rfqItems.some((item) => item.slug === product.slug);
 
-  const basePrice = useMemo(() => {
-    const match = product.price.match(/[\d.,]+/);
-    return match ? parseFloat(match[0].replace(/,/g, "")) : 0;
-  }, [product.price]);
+  const thumbnails = product.images && product.images.length > 0 ? product.images : [product.image];
 
-  const packagingCosts = {
-    "1kg bags": 0.5,
-    "5kg bags": 1.8,
-    "25kg bulk": 6.0,
-    "500g bags": 0.35,
-    "250g jars": 0.4,
-    "500g jars": 0.7,
-    "1kg containers": 1.2,
-    "200g jars": 0.3,
-    "400g jars": 0.6,
-  };
-
-  const fob = +(basePrice * quantity).toFixed(2);
-  const packagingCost = +(
-    (packagingCosts[packagingOption] || 0.5) * quantity
-  ).toFixed(2);
-  const logistics = +(fob * 0.1).toFixed(2);
-  const total = +(fob + packagingCost + logistics).toFixed(2);
-
-  const increase = () => setQuantity((q) => q + 1);
-  const decrease = () => setQuantity((q) => Math.max(1, q - 1));
+  const relatedProducts = getRelatedProducts(product);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {/* =====================
-          GALLERY
-          ===================== */}
-      <div className="animate-fade-up will-animate">
-        <div className="glass rounded-xl overflow-hidden">
-          <Image
-            src={mainImage}
-            alt={product.name}
-            width={800}
-            height={400}
-            className="w-full h-72 object-cover"
-          />
-
-          <div className="p-4 flex gap-2 overflow-x-auto">
-            {gallery.map((img, idx) => (
+    <div className="animate-fade-in will-animate">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        
+        {/* LEFT: Image Gallery */}
+        <div className="flex flex-col gap-4">
+          <div className="relative w-full aspect-square md:aspect-video lg:aspect-square bg-surface border border-border rounded-2xl overflow-hidden shadow-sm">
+            <ImageWithSkeleton
+              src={mainImage}
+              alt={product.name}
+              fill
+              priority
+              imageClassName="object-cover"
+            />
+          </div>
+          <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
+            {thumbnails.map((thumb, idx) => (
               <button
                 key={idx}
-                onClick={() => setMainImage(img)}
-                className={`
-                  w-20 h-20 rounded-md overflow-hidden
-                  border transition
-                  ${
-                    mainImage === img
-                      ? "border-primary"
-                      : "border-border hover:border-primary/50"
-                  }
-                `}
+                onClick={() => setMainImage(thumb)}
+                className={`relative w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden border-2 transition-all ${
+                  mainImage === thumb ? "border-primary opacity-100" : "border-transparent opacity-60 hover:opacity-100"
+                }`}
               >
-                <Image
-                  src={img}
-                  alt={`${product.name} ${idx + 1}`}
-                  width={160}
-                  height={160}
-                  className="w-full h-full object-cover"
-                />
+                <ImageWithSkeleton src={thumb} alt={`Thumbnail ${idx + 1}`} fill imageClassName="object-cover" />
               </button>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* =====================
-          DETAILS
-          ===================== */}
-      <div className="lg:col-span-2 animate-fade-up will-animate delay-100">
-        <h1 className="text-2xl font-bold text-foreground mb-2">
-          {product.name}
-        </h1>
-
-        <p className="text-sm glass-text-subtle mb-4">
-          Origin: India • Export Quality
-        </p>
-
-        <p className="glass-text-muted mb-6">{product.description}</p>
-
-        {/* =====================
-            PACKAGING & PRICING
-            ===================== */}
-        <div className="bg-accent p-6 rounded-xl mb-6">
-          <h3 className="text-lg font-semibold mb-4 text-foreground">
-            Packaging & Pricing
-          </h3>
-
-          {/* Packaging */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2 text-foreground">
-              Packaging Option
-            </label>
-
-            <div className="flex flex-wrap gap-2">
-              {product.packaging?.map((p) => (
-                <button
-                  key={p}
-                  onClick={() => setPackagingOption(p)}
-                  className={`
-                    px-3 py-2 rounded-full text-sm transition
-                    ${
-                      packagingOption === p
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-background border border-border hover:bg-accent"
-                    }
-                  `}
-                >
-                  {p}
-                </button>
-              ))}
-            </div>
+        {/* RIGHT: Product Info */}
+        <div className="flex flex-col">
+          <div className="mb-2">
+            <span className="inline-block bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-bold">
+              {product.category}
+            </span>
+          </div>
+          
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{product.name}</h1>
+          
+          <div className="mb-6">
+            {isLoading ? (
+              <div className="h-10 w-32 bg-border animate-pulse rounded"></div>
+            ) : (
+              <div className="text-3xl font-black text-primary">
+                {formatPrice(product.numericPrice)}{" "}
+                <span className="text-lg font-medium text-foreground/60">/ {product.unit}</span>
+              </div>
+            )}
+            <p className="text-sm text-foreground/50 mt-1">Min. Order: {product.minOrderQty}</p>
           </div>
 
-          {/* Quantity */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2 text-foreground">
-              Quantity
-            </label>
+          <p className="text-foreground/80 text-lg mb-8 leading-relaxed">
+            {product.description}
+          </p>
 
-            <div className="inline-flex items-center border border-border rounded-md bg-background">
-              <button
-                onClick={decrease}
-                className="px-3 py-2 hover:bg-accent transition"
+          <h3 className="text-xl font-bold text-foreground mb-4">Specifications</h3>
+          <div className="bg-surface border border-border rounded-xl overflow-hidden mb-8">
+            {Object.entries(product.specifications).map(([key, value], index) => (
+              <div 
+                key={key} 
+                className={`flex px-4 py-3 ${index !== 0 ? 'border-t border-border' : ''} ${index % 2 === 0 ? 'bg-background/50' : ''}`}
               >
-                <Minus className="h-4 w-4" />
-              </button>
-
-              <input
-                type="number"
-                value={quantity}
-                min={1}
-                onChange={(e) =>
-                  setQuantity(Math.max(1, Number(e.target.value || 1)))
-                }
-                className="
-                  w-20 text-center py-2
-                  border-x border-border
-                  bg-background
-                  focus:outline-none
-                "
-              />
-
-              <button
-                onClick={increase}
-                className="px-3 py-2 hover:bg-accent transition"
-              >
-                <Plus className="h-4 w-4" />
-              </button>
-            </div>
+                <div className="w-1/3 flex items-center text-foreground/70 font-medium">
+                  <CircleDot className="w-4 h-4 mr-2 text-primary" />
+                  {key}
+                </div>
+                <div className="w-2/3 text-foreground font-semibold">
+                  {value}
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Pricing */}
-          <div className="border-t border-border pt-4 space-y-2 text-sm text-foreground">
-            <div className="flex justify-between">
-              <span>FOB</span>
-              <span>{formatPrice(fob)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Packaging</span>
-              <span>{formatPrice(packagingCost)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Logistics</span>
-              <span>{formatPrice(logistics)}</span>
-            </div>
-            <div className="flex justify-between font-semibold text-base">
-              <span>Total</span>
-              <span>{formatPrice(total)}</span>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 mt-auto">
+            <Link
+              href={isAdded ? "/contact?rfq=true" : `/contact?product=${encodeURIComponent(product.name)}`}
+              className="flex-1 flex justify-center items-center px-8 py-4 bg-gradient-brand text-white font-bold rounded-lg hover:brightness-110 transition shadow-md shadow-gold-hover"
+            >
+              {isAdded ? "Review Bulk Quote" : "Request Single Quote"}
+            </Link>
+            <button
+              onClick={() => addToRFQ(product)}
+              className={`flex-1 flex justify-center items-center px-8 py-4 font-bold rounded-lg border-2 transition-all ${
+                isAdded 
+                  ? "bg-gold text-white border-gold shadow-gold drop-shadow-gold" 
+                  : "border-primary text-primary hover:bg-primary/5"
+              }`}
+            >
+              {isAdded ? "Added to RFQ ✓" : "Add to RFQ"}
+            </button>
           </div>
         </div>
-
-        {/* =====================
-            CTA
-            ===================== */}
-        <Link
-          href={`/contact?product=${encodeURIComponent(
-            product.name,
-          )}&quantity=${quantity}`}
-          className="
-            inline-flex items-center justify-center
-            px-6 py-3 rounded-md
-            font-semibold
-            text-white
-            bg-gradient-brand
-            hover:brightness-110
-            transition
-          "
-        >
-          Request Quote
-        </Link>
       </div>
+
+      {/* Related Products */}
+      {relatedProducts.length > 0 && (
+        <div className="pt-16 border-t border-border">
+          <h2 className="text-2xl font-bold text-foreground mb-8">Related Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {relatedProducts.map((p) => (
+              <ProductCard key={p.id} {...p} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

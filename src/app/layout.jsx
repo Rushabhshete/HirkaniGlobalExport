@@ -1,27 +1,33 @@
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Providers from "@/helper/Providers";
 import AppErrorBoundary from "@/components/ErrorBoundary";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import RFQFloatingWidget from "@/components/RFQFloatingWidget";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Fourzaa Global | Premium Spice Exporters",
-  description:
-    "Fourzaa Global is an Indian exporter of premium-quality spices supplying international markets.",
+  title: "Fourzaa Global | Premium Indian Agro Products Exporter",
+  description: "Fourzaa Global exports premium quality spices, agricultural, herbal and dehydrated products from India to global markets.",
   icons: {
-    icon: "/icon.png",          // 32x32 or 48x48
+    icon: "/fourzaa_logo_new.png",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-background text-foreground antialiased">
+      <body className={inter.className}>
         <AppErrorBoundary>
           <Providers>
             <Header />
             {children}
             <Footer />
+            <WhatsAppButton />
+            <RFQFloatingWidget />
           </Providers>
         </AppErrorBoundary>
       </body>
