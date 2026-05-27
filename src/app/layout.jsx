@@ -6,6 +6,8 @@ import Providers from "@/helper/Providers";
 import AppErrorBoundary from "@/components/ErrorBoundary";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import RFQFloatingWidget from "@/components/RFQFloatingWidget";
+import NavigationProgressBar from "@/components/NavigationProgressBar";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +25,9 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <AppErrorBoundary>
           <Providers>
+            <Suspense fallback={null}>
+              <NavigationProgressBar />
+            </Suspense>
             <Header />
             {children}
             <Footer />
