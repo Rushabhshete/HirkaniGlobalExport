@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { products } from "@/data/products"; //
+import { products } from "@/data/products";
 import { ChevronRight, Globe, Shield, Package } from "lucide-react";
 
 export const metadata = {
-  title: "Sitemap |Fourzaa Global",
-  description: "A complete map of all pages, products, and legal policies on theFourzaa Global website.",
+  title: "Sitemap | Fourzaa Global",
+  description: "A complete map of all pages, products, and legal policies on the Fourzaa Global website.",
 };
 
 export default function Sitemap() {
@@ -31,12 +31,12 @@ export default function Sitemap() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-sans">
           <section>
             <h2 className="text-xl font-bold text-foreground mb-6 flex items-center">
-              <Globe className="mr-2 text-orange-600 h-5 w-5" /> Main Pages
+              <Globe className="mr-2 text-gold h-5 w-5" /> Main Pages
             </h2>
             <ul className="space-y-4">
               {mainLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="flex items-center text-muted-foreground hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                  <Link href={link.href} className="flex items-center text-muted-foreground hover:text-primary transition-colors">
                     <ChevronRight className="h-4 w-4 mr-2" /> {link.name}
                   </Link>
                 </li>
@@ -46,12 +46,12 @@ export default function Sitemap() {
 
           <section>
             <h2 className="text-xl font-bold text-foreground mb-6 flex items-center">
-              <Package className="mr-2 text-orange-600 h-5 w-5" /> Products
+              <Package className="mr-2 text-gold h-5 w-5" /> Products
             </h2>
             <ul className="space-y-4">
               {products.map((product) => (
                 <li key={product.slug}>
-                  <Link href={`/products/${product.slug}`} className="flex items-center text-muted-foreground hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                  <Link href={`/products/${product.slug}`} className="flex items-center text-muted-foreground hover:text-primary transition-colors">
                     <ChevronRight className="h-4 w-4 mr-2" /> {product.name}
                   </Link>
                 </li>
@@ -61,12 +61,12 @@ export default function Sitemap() {
 
           <section>
             <h2 className="text-xl font-bold text-foreground mb-6 flex items-center">
-              <Shield className="mr-2 text-orange-600 h-5 w-5" /> Legal
+              <Shield className="mr-2 text-gold h-5 w-5" /> Legal
             </h2>
             <ul className="space-y-4">
               {legalLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="flex items-center text-muted-foreground hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                  <Link href={link.href} className="flex items-center text-muted-foreground hover:text-primary transition-colors">
                     <ChevronRight className="h-4 w-4 mr-2" /> {link.name}
                   </Link>
                 </li>

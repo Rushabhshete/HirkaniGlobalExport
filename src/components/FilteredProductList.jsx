@@ -63,7 +63,7 @@ export default function FilteredProductList({ products, categories }) {
         <div className="hidden lg:block bg-gradient-brand rounded-xl p-6 text-white text-center">
           <h3 className="text-lg font-bold mb-2">Download Brochure</h3>
           <p className="text-sm text-white/80 mb-4">Get our complete product catalog in PDF format.</p>
-          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-primary rounded-lg font-bold hover:bg-gray-100 transition">
+          <button className="flex items-center justify-center w-full px-4 py-2 bg-white text-primary rounded-lg font-bold transition hover:bg-gray-100 dark:bg-surface dark:hover:bg-surface/90">
             <Download className="w-4 h-4 mr-2" />
             Download PDF
           </button>

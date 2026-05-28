@@ -71,7 +71,7 @@ export default function PrivacyPolicy() {
             <p className="text-foreground/70">
               For privacy-related inquiries, please contact{" "}
               <span className="font-medium text-foreground">
-                export@spicecompany.com
+                info@fourzaaglobal.com
               </span>.
             </p>
           </section>

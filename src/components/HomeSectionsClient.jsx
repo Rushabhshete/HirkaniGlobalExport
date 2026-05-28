@@ -172,7 +172,7 @@ export default function HomeSectionsClient() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">Looking for a trusted export partner?</h2>
           <Link
             href="/contact"
-            className="inline-block px-10 py-4 text-lg font-bold text-primary bg-white rounded-lg hover:bg-gray-100 transition shadow-xl"
+            className="inline-block px-10 py-4 text-lg font-bold text-primary bg-white rounded-lg transition shadow-xl hover:bg-gray-100 dark:bg-surface dark:hover:bg-surface/90"
           >
             Request Bulk Quote
           </Link>

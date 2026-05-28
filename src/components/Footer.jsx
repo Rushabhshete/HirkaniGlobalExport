@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center flex-shrink-0 mb-6">
-              <div className="bg-white p-1 rounded-md inline-block">
+              <div className="bg-white/10 p-1 rounded-md inline-block">
                  <Image
                    src="/fourzaa_logo_new.png"
                    alt="Fourzaa Global"
@@ -72,8 +72,9 @@ export default function Footer() {
             <ul className="space-y-4">
               <li><Link href="/contact" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Request Quote</Link></li>
               <li><Link href="/private-labeling" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Private Labeling</Link></li>
-              <li><Link href="#" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Download Brochure</Link></li>
-              <li><Link href="#" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">FAQs</Link></li>
+              <li><Link href="/privacy-policy" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Privacy Policy</Link></li>
+              <li><Link href="/cookie-policy" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Cookie Policy</Link></li>
+              <li><Link href="/disclaimer" className="inline-block hover:translate-x-1 hover:text-white transition-all duration-300">Disclaimer</Link></li>
             </ul>
           </div>
 
@@ -82,9 +83,12 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-footer-text/60">
           <p>&copy; {new Date().getFullYear()} Fourzaa Global. All rights reserved.</p>
-          <div className="flex space-x-6">
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white transition-colors">Terms & Conditions</Link>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
+            <Link href="/refund-policy" className="hover:text-white transition-colors">Refund Policy</Link>
+            <Link href="/shipping-policy" className="hover:text-white transition-colors">Shipping Policy</Link>
+            <Link href="/sitemap" className="hover:text-white transition-colors">Sitemap</Link>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Menu, X, ChevronDown, ShoppingBag } from "lucide-react";
 import NavLink from "./NavLink";
 import CurrencySelector from "./CurrencySelector";
+import ThemeToggle from "./ThemeToggle";
 import { useRFQ } from "@/helper/RFQContext";
 
 export default function Header() {
@@ -89,6 +90,7 @@ export default function Header() {
 
           {/* RIGHT SIDE: CURRENCY & CTA */}
           <div className="hidden lg:flex items-center space-x-1.5 xl:space-x-4">
+            <ThemeToggle />
             {isHydrated && rfqItems.length > 0 && (
               <Link
                 href="/contact?rfq=true"
@@ -112,6 +114,7 @@ export default function Header() {
 
           {/* MOBILE CONTROLS */}
           <div className="lg:hidden flex items-center gap-2">
+            <ThemeToggle />
             {isHydrated && rfqItems.length > 0 && (
               <Link
                 href="/contact?rfq=true"
@@ -137,7 +140,7 @@ export default function Header() {
 
         {/* MOBILE MENU */}
         {isMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 w-full py-4 border-b border-border bg-surface shadow-xl z-50 animate-fade-down">
+          <div className="lg:hidden absolute top-full left-0 w-full max-h-[calc(100vh-5rem)] overflow-y-auto py-4 border-b border-border bg-surface shadow-xl z-50 animate-fade-down">
             <div className="flex flex-col space-y-2 px-4 sm:px-6">
               <NavLink href="/" onClick={() => setIsMenuOpen(false)}>Home</NavLink>
               <NavLink href="/about" onClick={() => setIsMenuOpen(false)}>About Us</NavLink>

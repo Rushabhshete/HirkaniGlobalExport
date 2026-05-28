@@ -10,7 +10,8 @@ export default function ThemeToggle({ className = "" }) {
 
   useEffect(() => setMounted(true), []);
 
-  const isDark = resolvedTheme === "dark";
+  // Avoid hydration mismatch: force light/default theme states during SSR and initial client paint
+  const isDark = mounted && resolvedTheme === "dark";
 
   return (
     <button
