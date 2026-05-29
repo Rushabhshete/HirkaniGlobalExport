@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 
 // 1. Basic Fade In
 export function FadeIn({ children, delay = 0, duration = 0.5, className = "" }) {
@@ -166,5 +166,58 @@ export function TiltCard({ children, className = "" }) {
     >
       {children}
     </motion.div>
+  );
+}
+
+// 7. Dynamic Text Blur Rotator
+export function TextBlurRotator({ texts, interval = 3000, className = "" }) {
+  const [index, setIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % texts.length);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [texts, interval]);
+
+  if (!mounted) {
+    return <span className={className}>{texts[0]}</span>;
+  }
+
+  return (
+   <span className={`inline-block relative w-full ${className}`}>
+  <AnimatePresence mode="wait">
+    <motion.span
+      key={index}
+      initial={{
+        opacity: 0,
+        filter: "blur(8px)",
+        y: 20,
+        scale: 0.98,
+      }}
+      animate={{
+        opacity: 1,
+        filter: "blur(0px)",
+        y: 0,
+        scale: 1,
+      }}
+      exit={{
+        opacity: 0,
+        filter: "blur(8px)",
+        y: -20,
+        scale: 0.98,
+      }}
+      transition={{
+        duration: 1.1,
+        ease: [0.22, 1, 0.36, 1], // smooth cinematic easing
+      }}
+      className="block whitespace-normal text-left will-change-transform"
+    >
+      {texts[index]}
+    </motion.span>
+  </AnimatePresence>
+</span>
   );
 }

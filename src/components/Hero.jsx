@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import ImageWithSkeleton from "@/components/ImageWithSkeleton";
+import { TextBlurRotator } from "@/components/MotionWrapper";
 
 export default function Hero() {
   return (
@@ -20,11 +23,24 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
         <div className="max-w-2xl text-white">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-up will-animate">
-            <span className="block text-gold">Exporting Premium</span>
-            <span className="block">Indian Agro Products</span>
-            <span className="block">Worldwide</span>
-          </h1>
+         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 animate-fade-up will-animate">
+  <span className="block text-gold">Exporting Premium</span>
+
+  <span className="block min-h-[1.25em] relative">
+    <TextBlurRotator
+      texts={[
+        "Indian Spices",
+        "Agricultural Products",
+        "Herbal Products",
+        "Dehydrated Products",
+        "Healthy Snacks",
+        "Handmade Products",
+      ]}
+    />
+  </span>
+
+  <span className="block">Worldwide</span>
+</h1>
           
           <p className="text-lg md:text-xl text-gray-200 mb-8 animate-fade-up will-animate delay-100">
             Trusted supplier of spices, agricultural, herbal, and dehydrated products to global markets with exceptional quality and reliability.
